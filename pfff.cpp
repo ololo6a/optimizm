@@ -122,8 +122,9 @@
 	
 		double x1=(double)-1,x2=(double)-1;
 		
-		jz1(0,-1.0,-1.0,1.0/6.0,1.0/6.0,0,0,f(x1,x2));
+		//jz1(0,-1.0,-1.0,1.0/6.0,1.0/6.0,0,0,f(x1,x2));
 		//pokoord(-1,-1,0,0);
 		ans.close();
 		system("pause");	
+		return 0;
 	}
