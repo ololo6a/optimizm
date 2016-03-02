@@ -1,4 +1,4 @@
-
+#define _USE_MATH_DEFINES
 	#include <iostream>
 	#include <stdio.h>
 	#include <conio.h>
@@ -6,17 +6,18 @@
 	#include <string>
 	#include <iomanip>
 	#include <algorithm>
-	#include <math.h>
-
-#include <list>
+	#include <cmath>
+	#include <list>
 	#include <fstream>
 	# define P          3.141592653589793238462643383279502884L	 /* pi */
 	# define MOD 1000000007;
-	using namespace std;
 
-	double k = 1.0;
+	using namespace std;
+	
+
+	double k = 15.0;
 	double eps = 0.0000001;
-	int needPod=3;
+	int needPod=6;
 	int n=500;
 	ofstream ans;
 	double f(double x1, double x2){
@@ -60,13 +61,13 @@
 	}
 	
 
-	double jz1(int pod, double x1, double x2, double h1, double h2, int m1, int m2, double pred)	{
+	double jz1(int pod, double x1, double x2, double h1, double h2, int m1, int m2, double pred,bool bol)	{
 
 		double a=x1,b=x2,c,d,fe;
 		int e,t;
-
+		pod = m1+m2;
 		if (pod<needPod && abs(h1)>eps && abs(h2)>eps)
-		if (m1>m2) { 
+		if (bol==true) { 
 			b=x2+h2;
 			c=h1;
 			d=h2;
@@ -80,13 +81,13 @@
 		ans << "h1=       " << c << endl;
 		ans << "h2=       " << d << endl;
 		ans << "F(x1,x2)= " << fe << endl;
-		ans << "m1+m2=    "  << m1+m2 << endl;
+	 //	ans << "pod=      "  << pod << endl;
 		ans		 << endl;
 			
 
 			if (pred>=fe) {
-				   jz1(pod+1,a,b,c,d*3,e,t,fe); 
-			}else  jz1(0,x1,x2,h1,d*(-0.5),e,t,f(x1,x2));
+				   jz1(pod+1,a,b,c,d*3,e,t,fe,false); 
+			}else  jz1(0,x1,x2,h1,d*(-0.5),m1,m2,f(x1,x2),false);
 
 		} else 
 		 { 
@@ -103,12 +104,12 @@
 		ans << "h1=       " << c << endl;
 		ans << "h2=       " << d << endl;
 		ans << "F(x1,x2)= " << fe << endl;
-		ans << "m1+m2=    "  << m1+m2 << endl;
+		//ans << "pod       "  << pod << endl;
 		ans		 << endl;
 			
 
-			if (pred>=fe) jz1(pod+1,a,b,c*3,d,e,t,fe); 
-			else     	  jz1(0,x1,x2,c*(-0.5),d,e,t,f(x1,x2));
+			if (pred>=fe) jz1(pod+1,a,b,c*3,d,e,t,fe,true); 
+			else     	  jz1(0,x1,x2,c*(-0.5),d,m1,m2,f(x1,x2),true);
 		}
 
 	
@@ -119,16 +120,13 @@
 
 	int main(){
 		
-
+		
 		ans.open("out.txt");
-	
 		double x1=(double)-1,x2=(double)-1;
 		
-		jz1(0,-1.0,-1.0,1.0/k,1.0/k,0,0,f(x1,x2));
+		jz1(0,-1.0,-1.0,1.0/k,1.0/k,0,0,f(x1,x2),false);
 		//pokoord(-1,-1,0,0);
-		ans.close();
-		
-		system("pause");	
-		
+		ans.close();		
+		//system("pause");	
 		return 0;
 	}
